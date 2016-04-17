@@ -52,14 +52,30 @@ var CommentList = React.createClass({
 });
 
 var CommentForm = React.createClass({
+  getInitialState: function() {
+    return { author: '', text: '' };
+  },
+
+  handleAuthorChange: function(e) {
+    this.setState({ author: e.target.value });
+  },
+
+  handleTextChange: function() {
+    this.setState({ text: e.target.value });
+  },
+
   render: function() {
     return (
-      <div className="commentForm">
-        Hola! Mi llamo es La Pacina de Muerta!
-      </div>
+      <form className="commentForm">
+        <input type="text" placeholder="Your name" onChange={ this.handleAuthorChange } />
+        <br></br>
+        <input type="text" placeholder="Say something..." onChange={ this.handleTextChange }/>
+        <br></br>
+        <input type="submit" value="Post"/>
+      </form>
     );
   }
-})
+});
 
 var Comment = React.createClass({
   rawMarkup: function() {
