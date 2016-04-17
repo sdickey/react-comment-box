@@ -13,6 +13,21 @@ var CommentBox = React.createClass({
     });
   },
 
+  handleCommentSubmit: function(comment) {
+    $.ajax({
+      url: this.props.url,
+      dataType: 'json',
+      type: 'POST',
+      data: comment,
+      success: function(data) {
+        this.setState({data: data});
+      }.bind(this),
+      error: function(xhr, status, err) {
+        console.error(this.props.url, status, err.toString());
+      }.bind(this)
+    });
+  },
+
   getInitialState: function() {
     return { data: [] };
   },
@@ -28,7 +43,7 @@ var CommentBox = React.createClass({
         What is up, Sean? I am a freaking comment box, yo!
         <h1>Comments</h1>
         <CommentList data={this.state.data}/>
-        <CommentForm />
+        <CommentForm onCommentSubmit={ this.handleCommentSubmit }/>
       </div>
     );
   }
@@ -60,16 +75,28 @@ var CommentForm = React.createClass({
     this.setState({ author: e.target.value });
   },
 
-  handleTextChange: function() {
+  handleTextChange: function(e) {
     this.setState({ text: e.target.value });
+  },
+
+  handleSubmit: function(e) {
+    e.preventDefault();
+    var author = this.state.author.trim();
+    var text = this.state.text.trim();
+    if (!text || !author) {
+      return;
+    }
+    //TODO send request to server
+    this.props.onCommentSubmit({ author: author, text: text });
+    this.setState({ author: '', text: '' });
   },
 
   render: function() {
     return (
-      <form className="commentForm">
-        <input type="text" placeholder="Your name" onChange={ this.handleAuthorChange } />
+      <form className="commentForm" onSubmit={ this.handleSubmit }>
+        <input type="text" placeholder="Your name" value={ this.state.author } onChange={ this.handleAuthorChange } />
         <br></br>
-        <input type="text" placeholder="Say something..." onChange={ this.handleTextChange }/>
+        <input type="text" placeholder="Say something..." value={ this.state.text } onChange={ this.handleTextChange }/>
         <br></br>
         <input type="submit" value="Post"/>
       </form>
