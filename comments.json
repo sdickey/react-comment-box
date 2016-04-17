@@ -1,12 +1,17 @@
 [
     {
         "id": 1388534400000,
-        "author": "Pete Hunt",
-        "text": "Hey there!"
+        "author": "Bilbo Baggins",
+        "text": "What have I got in my pocket?"
     },
     {
         "id": 1420070400000,
-        "author": "Paul O’Shannessy",
-        "text": "React is *great*!"
+        "author": "Gollum",
+        "text": "No fair! No fair! What has it gots in its pocketses?!"
+    },
+    {
+        "id": 1420070400001,
+        "author": "Thorin Oakenshield",
+        "text": "Grrrrrr!"
     }
 ]
